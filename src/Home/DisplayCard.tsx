@@ -14,12 +14,14 @@ import StarRating from "./StarRating";
 const DisplayCard = () => {
   const {
     loading,
-
+    
     data,
 
     handleAddToCart,
     filter,
-  }: any = React.useContext(GlobalContext);
+  } : any  = React.useContext(GlobalContext);
+
+  
 
   if (loading) {
     return (
@@ -27,6 +29,7 @@ const DisplayCard = () => {
         <FaReact size={200} color="#22d3ee" />
       </div>
     );
+
   }
   return (
     <div className="flex justify-center items-center">
