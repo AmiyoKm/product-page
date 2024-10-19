@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState , useContext } from 'react'
 import {
     NavigationMenu,
     NavigationMenuContent,
@@ -14,9 +14,12 @@ import { MdOutlineDensitySmall } from "react-icons/md";
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { IoMdSettings } from 'react-icons/io'
 import { ModeToggle } from '@/mode-toggle'
+import { GlobalContext } from '@/Context/GlobalContext'
 
 const Navbar = () => {
   const [isBrowseOpen, setIsBrowseOpen] = useState(false);
+  const [input ,setInput] = useState('');
+  const { handleInput } : any  = useContext(GlobalContext)
 
   return (
     <div >
@@ -33,8 +36,8 @@ const Navbar = () => {
             
             {/* Search */}
             <NavigationMenuItem className='flex space-x-2 items-center'>
-              <Input placeholder='Search...' className="w-80" />
-              <Button variant="secondary">Search</Button>
+              <Input value = {input} onChange={(e) => setInput(e.target.value)} placeholder='Search...' className="w-80" />
+              <Button onClick={() => handleInput(input)} variant="secondary">Search</Button>
             </NavigationMenuItem>
 
             {/* Browse */}

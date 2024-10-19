@@ -1,4 +1,5 @@
 import React from "react";
+
 interface GlobalContextProps {
   children?: React.ReactNode;
 }
@@ -11,8 +12,33 @@ export interface Cart {
   rating: number;
 }
 export const GlobalContext = React.createContext({});
+
 const GlobalStateContext = ({ children }: GlobalContextProps) => {
+
+  const [data, setData] = React.useState([]);
+  const [loading, setLoading] = React.useState(false);
   const [cart, setCart] = React.useState<Cart[]>([]);
+  const [filter, setFilter] = React.useState([]);
+  React.useEffect(() => {
+    fetchData();
+  }, []);
+
+ async function fetchData() {
+
+      try {
+          setLoading(true)
+          const response = await fetch('https://dummyjson.com/products')
+          const data = await response.json()
+          if (data) {
+              setData(data.products)
+              console.log(data.products)
+          }
+          setLoading(false)
+      } catch (error) {
+          console.log(error)
+          setLoading(false)
+      }
+  }
   function handleAddToCart(item: Cart) {
     setCart([...cart, item]);
   }
@@ -24,11 +50,19 @@ const GlobalStateContext = ({ children }: GlobalContextProps) => {
     if(newCart){
       setCart(newCart)
     }
-    
 
   }
+  function handleInput(input: string) {
+    const newFilter = data?.filter((product :any) =>
+      product?.title?.toLowerCase().includes(input.toLowerCase())
+    );
+    if (newFilter) {
+      setFilter(newFilter);
+    }
+    
+  }
   return (
-    <GlobalContext.Provider value={{ cart, setCart , handleAddToCart , handleRemoveCart }}>
+    <GlobalContext.Provider value={{ data, setData, loading, setLoading, cart, setCart , handleAddToCart , handleRemoveCart ,filter, setFilter, handleInput}}>
       {children}
     </GlobalContext.Provider>
   );
