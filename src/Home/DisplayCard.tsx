@@ -2,12 +2,15 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import React from 'react'
 import { FaReact } from "react-icons/fa";
-
+import { GlobalContext } from '@/Context/GlobalContext';
 import StarRating from './StarRating';
+
 
 const DisplayCard = () => {
     const [loading, setLoading] = React.useState(false);
     const [data, setData] = React.useState([]);
+
+    const { handleAddToCart} : any = React.useContext(GlobalContext)
     React.useEffect(() => {
       fetchData();
     }, []);
@@ -34,7 +37,7 @@ const DisplayCard = () => {
         </div>
     }
   return (
-    <>
+    <div className='flex justify-center items-center'>
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-10  ">
         {data.map((product:any , index : number) => (
         <div key={index} className='w-[400px]  rounded-3xl ease-in duration-300  hover:scale-105 hover:shadow-2xl space-y-7 cursor-pointer'>
@@ -48,14 +51,14 @@ const DisplayCard = () => {
                 <CardFooter >
                    
                     <p className='text-lg'> ${product.price}</p>
-                    <Button className='text-xs ml-5 hover:bg-yellow-300 hover:text-black' size='sm'>Add to cart</Button>
+                    <Button onClick={() => handleAddToCart(product)} className='text-xs ml-5 hover:bg-yellow-300 hover:text-black' size='sm'>Add to cart</Button>
                     </CardFooter>
             </Card>
             </div>
         ))}
         
     </div>
-    </>
+    </div>
   )
 }
 

@@ -8,7 +8,7 @@ const StarRating = ({rating}: StarRatingProps) => {
     const totalStars = 5
 
   return (
-   <>
+   <div>
     <div className='flex space-x-1 text-yellow-500'>
     {Array.from({ length: totalStars }, (_, index) => {
         // Display filled star if index is less than rating, else empty star
@@ -19,7 +19,7 @@ const StarRating = ({rating}: StarRatingProps) => {
         );
       })}
     </div>
-   </>
+   </div>
   )
 }
 
